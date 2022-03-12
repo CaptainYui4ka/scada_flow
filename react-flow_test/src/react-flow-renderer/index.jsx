@@ -134,7 +134,6 @@ const ReactFlowRenderer = () => {
                 data: { label: newName, id: _current.data.id }
               };
             }
-    
             return _current;
           })
         );
