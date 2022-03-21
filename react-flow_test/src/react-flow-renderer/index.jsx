@@ -9,6 +9,7 @@ import ReactFlow, {
     Controls
 } from 'react-flow-renderer';
 
+import Modal from '../signal/modal'
 import { nodeTypes } from './Nodes';
 import styleConnect from './style-connect';
 const socket = new WebSocket('ws://localhost:5000/', "protocolOne");
@@ -22,6 +23,9 @@ const ReactFlowRenderer = () => {
     const [newName, setNewName] = useState("");
     const [instance, setInstance] = useState();
 
+    //модальное окно
+    const [modalActive, setModalActive] = useState(true);
+
     useEffect(() => {
         if (activeNode) setNewName(activeNode.data.label);
     }, [activeNode]);
@@ -32,7 +36,7 @@ const ReactFlowRenderer = () => {
 
     const connectHandler = (params) => {
         setElements((els) =>
-        addEdge({ ...params, type: 'smoothstep', animated: true }, els))
+        addEdge({ ...params, type: 'smoothstep',style:{ stroke: '#FF0000'}, animated: true }, els))
     };
     
     const addRectangleHandler = () => {
@@ -260,11 +264,13 @@ const ReactFlowRenderer = () => {
             <button type="button" onClick={saveChangesHandler}>
                 Save changes
             </button>
-            {/*<button type='button' onClick={sendPos}>
-                Send Pos on Server
-            </button>*/}
+            <button className="open-btn" onClick={() => setModalActive(true)}>
+                Modal
+            </button>
         </div>
+        <Modal active={modalActive} setActive={setModalActive}>
 
+        </Modal>
     </div>
     );
 };
