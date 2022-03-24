@@ -9,22 +9,26 @@ import ReactFlow, {
     Controls
 } from 'react-flow-renderer';
 
-import Modal from '../signal/modal'
 import { nodeTypes } from './Nodes';
 import styleConnect from './style-connect';
+
+
 const socket = new WebSocket('ws://localhost:5000/', "protocolOne");
 
 
 const ReactFlowRenderer = () => {
     const [elements, setElements] = useState([styleConnect]);
-
     const [name, setName] = useState("");
     const [activeNode, setActiveNode] = useState();
     const [newName, setNewName] = useState("");
     const [instance, setInstance] = useState();
 
-    //модальное окно
-    const [modalActive, setModalActive] = useState(true);
+    //получение данных с localStorage
+    const getPosition = () => {
+        const getPos = localStorage.getItem("Position");
+        console.log('Position', JSON.parse(getPos));
+        //this.setState({ activeNode: JSON.parse(getPos)})
+    }
 
     useEffect(() => {
         if (activeNode) setNewName(activeNode.data.label);
@@ -86,11 +90,11 @@ const ReactFlowRenderer = () => {
           }
         };
         newNode.data = { ...newNode.data, id: `${newNode.id}` };
-    
         setElements((prev) => {
           return [...prev, newNode];
         });
         setName("");
+        
     };
 
     const addTextHandler = () => {
@@ -161,9 +165,9 @@ const ReactFlowRenderer = () => {
         //save pos
         const saveChangesHandler = () => {
             console.log("state", instance.getElements());
-
+            //сохранение в локальное хранилище
+            localStorage.setItem('Position', JSON.stringify(instance.getElements()));
             //отправка json
-            localStorage.setItem('state', JSON.stringify(instance.getElements()));
             let pos = JSON.stringify(instance.getElements());
             socket.send(pos);
         }
@@ -257,20 +261,17 @@ const ReactFlowRenderer = () => {
             />
 
             <button type="button" onClick={updateNodeHandler}>
-                Update
+                Обновить состояние фигуры
             </button>
         </div>
         <div>
             <button type="button" onClick={saveChangesHandler}>
-                Save changes
+                Сохранение
             </button>
-            <button className="open-btn" onClick={() => setModalActive(true)}>
-                Modal
+            <button type="button" onClick={getPosition}>
+                Загрузка
             </button>
         </div>
-        <Modal active={modalActive} setActive={setModalActive}>
-
-        </Modal>
     </div>
     );
 };
