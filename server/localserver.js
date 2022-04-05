@@ -14,7 +14,9 @@ function getRandomInt(max) {
 
 app.ws('/', (res, req) => {
     console.log('ПОДКЛЮЧЕНО')
-    res.send(getRandomInt(50))
+    setTimeout(function() {
+        res.send(getRandomInt(50));
+    }, 5000 );
     res.on('message', (msg) => {
         console.log(JSON.parse(msg))
         fs.writeFileSync('dataPos.json', JSON.stringify(msg));
