@@ -23,6 +23,10 @@ ChartJS.register(
 
 export const options = {
     responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
     plugins: {
       legend: {
         position: 'top',
@@ -33,32 +37,32 @@ export const options = {
       },
     },
 };
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
 export const data = {
   labels,
   datasets: [
     {
       label: 'Dataset 1',
-      data: [-5,15,5,20,9,5,4,25,30,35,40],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      data: [-5,20,5,35,5,5,10,20,15,45],
+      borderColor: 'blue',
+      backgroundColor: '#6BA7FF'
     },
     {
       label: 'Dataset 2',
-      data: [-20,-15,-10,-5,0,5,10,15,20,25],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      data: [-20,-15,-10,-5,0,0,10,5,25,10],
+      borderColor: 'red',
+      backgroundColor: '#FF6B6B'
     },
-  ],
+  ],  
 };
-
 
 
 const LineChart = () => {
     return (
         <div style={{width: 700}}>
             <Line options={options} data={data}/>
+            
         </div>
     )
 }

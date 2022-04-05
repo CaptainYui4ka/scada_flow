@@ -6,12 +6,13 @@ import ReactFlow, {
     addEdge,
     Background,
     MiniMap,
-    Controls
+    Controls,
+    useNodesState,
+    useEdgesState
 } from 'react-flow-renderer';
 
 import { nodeTypes } from './Nodes';
 import styleConnect from './style-connect';
-
 
 const socket = new WebSocket('ws://localhost:5000/', "protocolOne");
 
@@ -22,6 +23,7 @@ const ReactFlowRenderer = () => {
     const [activeNode, setActiveNode] = useState();
     const [newName, setNewName] = useState("");
     const [instance, setInstance] = useState();
+    //const [ nodes, setNodes, onNodesChange ] = useNodesState(initialNodes);
 
     //получение данных с localStorage
     const getPosition = () => {
@@ -49,8 +51,8 @@ const ReactFlowRenderer = () => {
           data: { label: `${name}` },
           type: "rectangle",
           position: {
-            x: 0,
-            y: 0
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight
           }
         };
         newNode.data = { ...newNode.data, id: `${newNode.id}` };
@@ -67,8 +69,8 @@ const ReactFlowRenderer = () => {
           data: { label: `${name}` },
           type: "circle",
           position: {
-            x: 0,
-            y: 0
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight
           }
         };
         newNode.data = { ...newNode.data, id: `${newNode.id}` };
@@ -85,8 +87,8 @@ const ReactFlowRenderer = () => {
           data: { label: `${name}` },
           type: "triangle",
           position: {
-            x: 0,
-            y: 0
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight
           }
         };
         newNode.data = { ...newNode.data, id: `${newNode.id}` };
@@ -271,6 +273,7 @@ const ReactFlowRenderer = () => {
             <button type="button" onClick={getPosition}>
                 Загрузка
             </button>
+            {/* Сделать кнопку которая открывает модальное окно modal.jsx */}
         </div>
     </div>
     );
