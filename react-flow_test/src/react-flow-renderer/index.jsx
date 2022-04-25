@@ -160,12 +160,12 @@ const ReactFlowRenderer = () => {
         socket.onopen = () => {
             console.log('подключено');
         }
-
+        /*
         socket.onmessage = (event) => {
             console.log('есть сообщение')
             const lineSignal = JSON.parse(event.data);
             console.log(lineSignal);
-            /*let linedate = event.data;
+            let linedate = event.data;
             console.log(linedate);
             let json = JSON.stringify(linedate);
             console.log(json);
@@ -175,11 +175,15 @@ const ReactFlowRenderer = () => {
                 type: 'application/json',
                 name: fileName
             })
-            saveAs (fileToSave, fileName);*/
+            saveAs (fileToSave, fileName);
         }
-
-        //сохранение сигналов с сервера
-        
+        */
+        function myMessage(event) {
+            console.log('есть сообщение')
+            const lineSignal = JSON.parse(event.data);
+            console.log(lineSignal);
+        }
+        socket.onmessage = myMessage;
 
         //save pos
         const saveChangesHandler = () => {
