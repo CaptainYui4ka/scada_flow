@@ -162,7 +162,13 @@ const ReactFlowRenderer = () => {
 
         socket.onmessage = (event) => {
             console.log('есть сообщение', event.data)
+            let linedate = event.data;
+            console.log(linedate);
+            let json = JSON.stringify(linedate);
+            let arr = [json];
+            console.log(arr);
         }
+        
 
         //save pos
         const saveChangesHandler = () => {

@@ -1,4 +1,3 @@
-
 const { json } = require('express');
 const express = require('express');
 const app = express();
@@ -12,11 +11,16 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+let i = 0;
+
 app.ws('/', (res, req) => {
     console.log('ПОДКЛЮЧЕНО')
     setTimeout(function() {
-        res.send(getRandomInt(50));
-    }, 5000 );
+        while ( i < 10) {
+            res.send(getRandomInt(50));
+            i++;
+        }
+    }, 5000)
     res.on('message', (msg) => {
         console.log(JSON.parse(msg))
         fs.writeFileSync('dataPos.json', JSON.stringify(msg));
