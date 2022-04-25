@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { saveAs } from 'file-saver';
 import "./styles.css";
 import ReactFlow, {
     removeElements,
@@ -161,13 +162,23 @@ const ReactFlowRenderer = () => {
         }
 
         socket.onmessage = (event) => {
-            console.log('есть сообщение', event.data)
-            let linedate = event.data;
+            console.log('есть сообщение')
+            const lineSignal = JSON.parse(event.data);
+            console.log(lineSignal);
+            /*let linedate = event.data;
             console.log(linedate);
             let json = JSON.stringify(linedate);
-            let arr = [json];
-            console.log(arr);
+            console.log(json);
+            let fileName = 'signal.json'
+
+            let fileToSave = new Blob([JSON.stringify(json, null, 4)], {
+                type: 'application/json',
+                name: fileName
+            })
+            saveAs (fileToSave, fileName);*/
         }
+
+        //сохранение сигналов с сервера
         
 
         //save pos
