@@ -1,4 +1,4 @@
-import React from 'react'
+import  { useState } from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -35,50 +35,56 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Line Chart',
+      text: 'График активности',
     },
   },
-};
-const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-
-socket.onmessage = function(event) {
-  var message = event.data;
-  console.log('есть сообщение')
-  const lineSignal = JSON.parse(message);
-  console.log(lineSignal);
-  showMessage(lineSignal);
-}
-
-export function showMessage(message) {
-  var messageSignal = document.createElement('div');
-  messageSignal.appendChild(document.createTextNode(message));
-  console.log(messageSignal);
-}
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [50, 25, 10, 5, 0, -10, -20, -50, -25, -50],
-      borderColor: 'blue',
-      backgroundColor: '#6BA7FF'
-    },
-    {
-      label: 'Dataset 2',
-      data: [-20, -15, -10, -5, 0, 0, 10, 5, 25, 10],
-      borderColor: 'red',
-      backgroundColor: '#FF6B6B'
-    },
-  ],
 };
 
 
 const LineChart = () => {
+  
+  const [ linedate, setLine ] = useState('');
+
+  socket.onmessage = function(event) {
+    var message = event.data;
+    console.log('есть сообщение')
+    const lineSignal = JSON.parse(message);
+    console.log(lineSignal);
+    showMessage(lineSignal);
+  }
+  
+  function showMessage(message) {
+    var messageSignal = document.createElement('div');
+    messageSignal.appendChild(document.createTextNode(message));
+    setLine(message);
+  }
+  console.log(linedate);
+  let endLinedate = linedate.length;
+  console.log(endLinedate);
+
+  //Линейный график
+  const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Сигнал 1',
+        data: linedate,
+        borderColor: 'blue',
+        backgroundColor: '#6BA7FF'
+      },
+      {
+        label: 'Сигнал 2',
+        data: [-20, -15, -10, -5, 0, 0, 10, 5, 25, 10],
+        borderColor: 'red',
+        backgroundColor: '#FF6B6B'
+      },
+    ],
+  };
+
   return (
     <div style={{ width: 700 }}>
-      <Line options={options} data={data} />
-
+      <Line options={options} data={data}/>
     </div>
   )
 }

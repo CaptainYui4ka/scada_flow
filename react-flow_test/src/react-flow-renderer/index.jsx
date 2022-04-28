@@ -17,11 +17,11 @@ import styleConnect from './style-connect';
 const socket = new WebSocket('ws://localhost:5000/', "protocolOne");
 
 const ReactFlowRenderer = () => {
-    const [elements, setElements] = useState([styleConnect]);
-    const [name, setName] = useState("");
-    const [activeNode, setActiveNode] = useState();
-    const [newName, setNewName] = useState("");
-    const [instance, setInstance] = useState();
+    const [ elements, setElements] = useState([styleConnect]);
+    const [ name, setName] = useState("");
+    const [ activeNode, setActiveNode] = useState();
+    const [ newName, setNewName] = useState("");
+    const [ instance, setInstance] = useState();
     const [ connected, setConnected ] = useState(false);
     //const [ nodes, setNodes, onNodesChange ] = useNodesState(initialNodes);
 
