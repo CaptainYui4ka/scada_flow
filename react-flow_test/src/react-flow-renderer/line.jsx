@@ -41,15 +41,19 @@ export const options = {
 };
 const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
-function myMessage(event) {
-  let message = event.data;
-
+socket.onmessage = function(event) {
+  var message = event.data;
   console.log('есть сообщение')
   const lineSignal = JSON.parse(message);
   console.log(lineSignal);
+  showMessage(lineSignal);
 }
-socket.onmessage = myMessage;
-console.log();
+
+export function showMessage(message) {
+  var messageSignal = document.createElement('div');
+  messageSignal.appendChild(document.createTextNode(message));
+  console.log(messageSignal);
+}
 
 export const data = {
   labels,
