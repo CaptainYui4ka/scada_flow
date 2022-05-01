@@ -63,9 +63,9 @@ const LineChart = () => {
   console.log(endLinedate);
 
   //Линейный график
-  const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
+  const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   const data = {
-    labels,
+    labels ,
     datasets: [
       {
         label: 'Сигнал 1',
