@@ -18,7 +18,15 @@ while ( i < 10 ) {
     i++;
     fs.writeFileSync('signal.json', JSON.stringify(rndArr));
 }
+
+let j = 0;
+let rndJArr = [];
+while ( j < 10 ) {
+    rndJArr.push(getRandomInt(50));
+    j++;
+}
 console.log(rndArr);
+console.log(rndJArr);
 /*while ( i < 10 ) {
     fs.writeFileSync('signal.json', JSON.stringify(getRandomInt(50)));
     i++;
@@ -34,6 +42,7 @@ app.ws('/', (res, req) => {
         }
     }, 5000)*/
     res.send(JSON.stringify(rndArr));
+    res.send(JSON.stringify(rndJArr));
     res.on('message', (msg) => {
         console.log(JSON.parse(msg))
         fs.writeFileSync('dataPos.json', JSON.stringify(msg));
