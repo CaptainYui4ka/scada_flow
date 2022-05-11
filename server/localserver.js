@@ -1,9 +1,16 @@
+/*import express from 'express';
+import path from 'path'
+import WSserver from 'express-ws'*/
+
 const { json } = require('express');
 const express = require('express');
+const  path = require('path');
+
+//const __dirname = path.resolve();
 const app = express();
 const WSserver = require('express-ws')(app);
-const fs = require('fs');
-
+//import fs from 'fs';
+const fs = require('fs')
 const PORT = process.env.PORT || 5000;
 const data = require('./dataPos.json');
 
@@ -33,7 +40,13 @@ console.log(rndJArr);
 }*/
 i = 0;
 
-app.ws('/', (res, req) => {
+app.get('/', (req, res) => {
+    //req.sendFile(__dirname, 'signal', 'home.html');
+    res.send('<h1>Server Work!!!</h1>')
+});
+
+
+app.ws('/', (ws, req) => {
     console.log('ПОДКЛЮЧЕНО')
     /*setTimeout(function() {
         while ( i < 10) {
@@ -41,9 +54,9 @@ app.ws('/', (res, req) => {
             i++;
         }
     }, 5000)*/
-    res.send(JSON.stringify(rndArr));
-    res.send(JSON.stringify(rndJArr));
-    res.on('message', (msg) => {
+    ws.send(JSON.stringify(rndArr));
+    ws.send(JSON.stringify(rndJArr));
+    ws.on('message', (msg) => {
         console.log(JSON.parse(msg))
         fs.writeFileSync('dataPos.json', JSON.stringify(msg));
     })

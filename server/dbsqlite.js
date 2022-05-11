@@ -1,22 +1,29 @@
-var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database(':memory:')
+const sqlite3 = require('sqlite3').verbose()
+const db = new sqlite3.Database(':memmory:')
+const json = require('./dataPos.json')
+let id = JSON.parse(json);
 
-db.serialize(function () {
-  db.run('CREATE TABLE lorem (info TEXT)')
-  var stmt = db.prepare('INSERT INTO lorem VALUES (?)')
+var now = new Date().toLocaleTimeString();
 
-  for (var i = 0; i < 10; i++) {
-    stmt.run('Ipsum ' + i)
-  }
+/*db.run(
+  `CREATE TABLE signal (time, priority, groups, status, id)`
+)*/
 
-  stmt.finalize()
+//db.serialize(function () {
 
-  db.each('SELECT rowid AS id, info FROM lorem', function (
-    err,
-    row
-  ) {
-    console.log(row.id + ': ' + row.info)
-  })
-})
+  
+  /*const sql = `INSERT INTO signal (time, priority, groups, status, id) 
+              VALUES('?','?','?','?','?')`;
 
-db.close()
+  db.run(sql,[now, 'very tall', '', 'active', 1], (err) => {
+    if(err) return console.error(err.message);
+
+    console.log('запись добавлена')
+  })*/
+
+  //db.run()
+
+  /*db.close((err) => {
+    if (err) return console.error(err.message)
+  });
+})*/

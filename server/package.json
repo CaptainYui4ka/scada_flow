@@ -2,12 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "localserver.js",
   "scripts": {
-    "start": "nodemon localserver.js"
+    "serve": "nodemon localserve.js",
+    "start": "node localserver.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express"
+  ],
+  "author": "CaptainYuichka",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
