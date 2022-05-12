@@ -3,10 +3,16 @@ import Table from 'react-bootstrap/Table'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import datamessage from './datamessage.json'
 
+const socket = new WebSocket('ws://localhost:5000/', "protocolOne");
 
 
 function Message(){
 
+    socket.onmessage = (event) => {
+        let msg = JSON.parse(event.data);
+        console.log('есть сообщение')
+        console.log(msg);
+    };
     const messageJson = datamessage.map(
         (info) => {
             return(
@@ -16,7 +22,7 @@ function Message(){
                     <th>{info.priority}</th>
                     <th>{info.group}</th>
                     <th>{info.status}</th>
-                    <th>{info.___}</th>
+                    <th>{info.message}</th>
                 </tr>
             )
         }
@@ -25,7 +31,7 @@ function Message(){
     return (
         <div>
             <div>
-                <h1>Message page</h1> 
+                <h1></h1> 
             </div>
             <div className="table mt-5">
                 <Table striped bordered hover size='sm'>
@@ -36,7 +42,7 @@ function Message(){
                             <th>приоритет</th>
                             <th>группа</th>
                             <th>статус</th>
-                            <th>___</th>
+                            <th>Сообщение</th>
                         </tr>
                     </thead>
                     <tbody>

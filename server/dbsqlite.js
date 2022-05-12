@@ -1,29 +1,51 @@
-const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database(':memmory:')
-const json = require('./dataPos.json')
-let id = JSON.parse(json);
+const sqlite3 = require('sqlite3').verbose();
+let sql;
 
-var now = new Date().toLocaleTimeString();
+let time = new Date();
+let now = time.toLocaleTimeString();
 
-/*db.run(
-  `CREATE TABLE signal (time, priority, groups, status, id)`
-)*/
+//connect to database
+const db = new sqlite3.Database('./db/signal.db', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) return console.error(err.message);
 
-//db.serialize(function () {
+  console.log('connection opened')
+});
 
-  
-  /*const sql = `INSERT INTO signal (time, priority, groups, status, id) 
-              VALUES('?','?','?','?','?')`;
 
-  db.run(sql,[now, 'very tall', '', 'active', 1], (err) => {
-    if(err) return console.error(err.message);
+//create table
+//sql = `CREATE TABLE signal(id INTEGER PRIMARY KEY, time, priority, gruppa, status, message)`;
+//db.run(sql);
 
-    console.log('запись добавлена')
-  })*/
 
-  //db.run()
+//drop table НЕ ТРОГАТЬ
+//db.run(" DROP TABLE signal");
 
-  /*db.close((err) => {
-    if (err) return console.error(err.message)
-  });
+
+//insert data into signal table
+/*sql = `INSERT INTO signal(time, priority, gruppa, status, message) VALUES (?, ?, ?, ?, ?)`;
+db.run(sql, [now, "normal", "3", "active", ""], (err) => {
+  if (err) return console.error(err.message);
+});*/
+
+
+//update table
+/*sql = `UPDATE signal SET gruppa = ? WHERE id = ? `;
+db.run(sql, ["1", 3], err => {
+  if (err) return console.error(err.message);
 })*/
+
+//del table НЕ ТРОГАТЬ
+/*sql = `DELETE FROM signal WHERE id = ?`;
+db.run(sql, [ ], err => {
+  if (err) return console.error(err.message);
+})*/
+
+
+//query the date
+sql = `SELECT * FROM signal`;
+db.all(sql, [], (err, rows) =>{
+  if (err) return console.error(err.message);
+    rows.forEach(row => {
+      console.log(row);
+    })
+})

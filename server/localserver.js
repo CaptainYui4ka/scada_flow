@@ -1,18 +1,14 @@
-/*import express from 'express';
-import path from 'path'
-import WSserver from 'express-ws'*/
-
 const { json } = require('express');
 const express = require('express');
 const  path = require('path');
-
-//const __dirname = path.resolve();
+const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const WSserver = require('express-ws')(app);
-//import fs from 'fs';
-const fs = require('fs')
+const fs = require('fs');
+
 const PORT = process.env.PORT || 5000;
 const data = require('./dataPos.json');
+const db = new sqlite3.Database('./db/signal.db')
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -48,12 +44,14 @@ app.get('/', (req, res) => {
 
 app.ws('/', (ws, req) => {
     console.log('ПОДКЛЮЧЕНО')
-    /*setTimeout(function() {
-        while ( i < 10) {
-            res.send(getRandomInt(50));
-            i++;
-        }
-    }, 5000)*/
+
+    db.serialize(function () {
+        db.all(`SELECT * FROM signal`, function (err, row){
+            ws.send(JSON.stringify(row));
+        });
+    });
+    db.close();
+
     ws.send(JSON.stringify(rndArr));
     ws.send(JSON.stringify(rndJArr));
     ws.on('message', (msg) => {
