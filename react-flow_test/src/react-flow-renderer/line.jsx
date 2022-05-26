@@ -7,7 +7,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -53,19 +53,12 @@ const LineChart = () => {
     console.log(lineSignal);
     showMessage(lineSignal);
   }
-
-  //while ()
-
-  
-  
+    
   function showMessage(message) {
     var messageSignal = document.createElement('div');
     messageSignal.appendChild(document.createTextNode(message));
     setLine(message);
   }
-  /*console.log(linedate);
-  let endLinedate = linedate.length;
-  console.log(endLinedate);*/
 
   //Линейный график
   const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
@@ -88,7 +81,7 @@ const LineChart = () => {
   };
 
   return (
-    <div style={{ width: 700 }}>
+    <div style={{ width: 1250 }}>
       <Line options={options} data={data}/>
     </div>
   )

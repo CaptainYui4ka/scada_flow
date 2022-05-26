@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import "./styles.css";
 import ReactFlow, {
     removeElements,
@@ -7,8 +7,7 @@ import ReactFlow, {
     Background,
     MiniMap,
     Controls,
-    useNodesState,
-    useEdgesState
+    useZoomPanHelper
 } from 'react-flow-renderer';
 
 import { nodeTypes } from './Nodes';
@@ -23,14 +22,6 @@ const ReactFlowRenderer = () => {
     const [ newName, setNewName] = useState("");
     const [ instance, setInstance] = useState();
     const [ connected, setConnected ] = useState(false);
-    //const [ nodes, setNodes, onNodesChange ] = useNodesState(initialNodes);
-
-    //получение данных с localStorage
-    const getPosition = () => {
-        const getPos = localStorage.getItem("Position");
-        console.log('Position', JSON.parse(getPos));
-        //this.setState({ activeNode: JSON.parse(getPos)})
-    }
 
     useEffect(() => {
         if (activeNode) setNewName(activeNode.data.label);
@@ -179,26 +170,44 @@ const ReactFlowRenderer = () => {
     */
 
     socket.onmessage = (event) => {
-        let msg = JSON.parse(event.data);
+        let msg = JSON.stringify(JSON.parse(event.data));
         console.log('есть сообщение')
         console.log(msg);
+        localStorage.setItem('data', msg);
     };
-    const signalSocket = (msg) => {
-        console.log(signalSocket.msg);
-        console.log(signalSocket.msg);
-        console.log(signalSocket.msg);
-    }
+    
     
 
     //save pos
     const saveChangesHandler = () => {
         console.log("state", instance.getElements());
         //сохранение в локальное хранилище
-        localStorage.setItem('Position', JSON.stringify(instance.getElements()));
+        //localforage.setItem('position', JSON.stringify(instance.getElements()));
+        localStorage.setItem('position', JSON.stringify(instance.getElements()));
         //отправка json
         let pos = JSON.stringify(instance.getElements());
         socket.send(pos);
     }
+    
+    /*const onSave = useCallback(() => {
+        if (instance) {
+            const flow = instance.toObject();
+            localforage.setItem("Position", flow)
+        }
+    })*/
+
+    /*const onRestore = useCallback(() => {
+        const restoreFlow = async () => {
+            const flow = await localforage.getItem("Position");
+
+            if(flow){
+                const[x = 0, y = 0] = flow.position;
+                setElements(flow.elements || []);
+                transform({ x, y, zoom: flow.zoom || 0});
+            }
+        };
+        restoreFlow();
+    }, [setElements, transform]);*/
 
     socket.onclose = function (event) {
         if (event.wasClean) {
@@ -296,10 +305,14 @@ const ReactFlowRenderer = () => {
                 <button type="button" onClick={saveChangesHandler}>
                     Сохранение
                 </button>
-                <button type="button" onClick={getPosition}>
-                    Загрузка
+                {/*<button type="button" onClick={onSave}>
+                    Сохранение в localStorage
                 </button>
+                <button type="button" onClick={onRestore}>
+                    Загрузка
+                </button>*/}
                 {/* Сделать кнопку которая открывает модальное окно modal.jsx */}
+                {/*<Message/>*/}
             </div>
         </div>
     );

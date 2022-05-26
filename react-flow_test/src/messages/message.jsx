@@ -1,26 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Table from 'react-bootstrap/Table'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import datamessage from './datamessage.json'
-
-const socket = new WebSocket('ws://localhost:5000/', "protocolOne");
+//import datamessage from './datamessage.json'
 
 
 function Message(){
 
-    socket.onmessage = (event) => {
-        let msg = JSON.parse(event.data);
-        console.log('есть сообщение')
-        console.log(msg);
-    };
+    const datamessage = localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : [];
+
     const messageJson = datamessage.map(
         (info) => {
+            //допилить
+            /*if (info.priority == "very tall"){
+                console.log('ошибка')
+            }*/
+
             return(
-                <tr>
+                <tr key={info.id}>
                     <th>{info.id}</th>
-                    <th>{info.data}</th>
+                    <th>{info.time}</th>
                     <th>{info.priority}</th>
-                    <th>{info.group}</th>
+                    <th>{info.gruppa}</th>
                     <th>{info.status}</th>
                     <th>{info.message}</th>
                 </tr>
@@ -31,7 +31,7 @@ function Message(){
     return (
         <div>
             <div>
-                <h1></h1> 
+                <h1>Таблица объектов</h1> 
             </div>
             <div className="table mt-5">
                 <Table striped bordered hover size='sm'>

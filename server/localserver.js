@@ -1,3 +1,4 @@
+// Импорт библиотек
 const { json } = require('express');
 const express = require('express');
 const  path = require('path');
@@ -9,6 +10,8 @@ const fs = require('fs');
 const PORT = process.env.PORT || 5000;
 const data = require('./dataPos.json');
 const db = new sqlite3.Database('./db/signal.db')
+
+
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -37,7 +40,6 @@ console.log(rndJArr);
 i = 0;
 
 app.get('/', (req, res) => {
-    //req.sendFile(__dirname, 'signal', 'home.html');
     res.send('<h1>Server Work!!!</h1>')
 });
 
@@ -46,14 +48,16 @@ app.ws('/', (ws, req) => {
     console.log('ПОДКЛЮЧЕНО')
 
     db.serialize(function () {
-        db.all(`SELECT * FROM signal`, function (err, row){
-            ws.send(JSON.stringify(row));
+        db.all(`SELECT * FROM signal`, function (err, rows){
+            ws.send(JSON.stringify({'arrays': [rndArr, rndJArr], 'data': rows}));
         });
     });
     db.close();
 
-    ws.send(JSON.stringify(rndArr));
-    ws.send(JSON.stringify(rndJArr));
+    //ws.send(JSON.stringify(rndArr));
+    //ws.send(JSON.stringify({'arrays': [rndArr, rndJArr], 'data':}));
+    //ws.send(JSON.stringify(data))
+
     ws.on('message', (msg) => {
         console.log(JSON.parse(msg))
         fs.writeFileSync('dataPos.json', JSON.stringify(msg));
