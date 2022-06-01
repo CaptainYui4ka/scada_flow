@@ -10,10 +10,6 @@ function Message(){
 
     const messageJson = datamessage.map(
         (info) => {
-            //допилить
-            /*if (info.priority == "very tall"){
-                console.log('ошибка')
-            }*/
 
             return(
                 <tr key={info.id}>

@@ -22,6 +22,7 @@ const ReactFlowRenderer = () => {
     const [ newName, setNewName] = useState("");
     const [ instance, setInstance] = useState();
     const [ connected, setConnected ] = useState(false);
+    const [ dataDB, setDataDB ] = useState('');
 
     useEffect(() => {
         if (activeNode) setNewName(activeNode.data.label);
@@ -170,12 +171,26 @@ const ReactFlowRenderer = () => {
     */
 
     socket.onmessage = (event) => {
-        let msg = JSON.stringify(JSON.parse(event.data));
+        let msg = JSON.parse(event.data);
         console.log('есть сообщение')
         console.log(msg);
-        localStorage.setItem('data', msg);
+        //localStorage.setItem('data', msg);
+        //let db = msg.data;
+        //console.log(db);
+        //localStorage.setItem('data', db);
+        showMessage(event.data);
     };
-    
+
+    function showMessage(message) {
+        var messageSignal = document.createElement('div');
+        messageSignal.appendChild(document.createTextNode(message));
+        setDataDB(JSON.parse(message));
+    }
+
+    //console.log(dataDB);
+    let dataDatabase = dataDB.data;
+    console.log(dataDatabase);
+    //localStorage.setItem('data', JSON.stringify(dataDatabase))
     
 
     //save pos

@@ -46,10 +46,9 @@ app.get('/', (req, res) => {
 
 app.ws('/', (ws, req) => {
     console.log('ПОДКЛЮЧЕНО')
-
     db.serialize(function () {
         db.all(`SELECT * FROM signal`, function (err, rows){
-            ws.send(JSON.stringify({'arrays': [rndArr, rndJArr], 'data': rows}));
+            ws.send(JSON.stringify({'arraysone': rndArr,'arraystwo':rndJArr, 'data': rows}));
         });
     });
     db.close();
