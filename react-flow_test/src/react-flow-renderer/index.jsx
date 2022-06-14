@@ -189,7 +189,7 @@ const ReactFlowRenderer = () => {
 
     //console.log(dataDB);
     let dataDatabase = dataDB.data;
-    console.log(dataDatabase);
+    //console.log(dataDatabase);
     //localStorage.setItem('data', JSON.stringify(dataDatabase))
     
 
@@ -199,7 +199,7 @@ const ReactFlowRenderer = () => {
         //сохранение в локальное хранилище
         //localforage.setItem('position', JSON.stringify(instance.getElements()));
         localStorage.setItem('position', JSON.stringify(instance.getElements()));
-        //отправка json
+        //отправка данных на сервер
         let pos = JSON.stringify(instance.getElements());
         socket.send(pos);
     }
@@ -230,7 +230,8 @@ const ReactFlowRenderer = () => {
         } else {
             console.log('Обрыв соединения')
         }
-        console.log('Код: ' + event.code + ' причина: ' + event.reason)
+        console.log('Код: ' + event.code + ' причина: ' + event.reason);
+        alert('Возникла ошибки: обрыв соединения');
     }
 
     socket.onerror = function (event) {
@@ -320,14 +321,6 @@ const ReactFlowRenderer = () => {
                 <button type="button" onClick={saveChangesHandler}>
                     Сохранение
                 </button>
-                {/*<button type="button" onClick={onSave}>
-                    Сохранение в localStorage
-                </button>
-                <button type="button" onClick={onRestore}>
-                    Загрузка
-                </button>*/}
-                {/* Сделать кнопку которая открывает модальное окно modal.jsx */}
-                {/*<Message/>*/}
             </div>
         </div>
     );

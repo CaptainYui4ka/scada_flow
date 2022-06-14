@@ -19,7 +19,7 @@ function getRandomInt(max) {
 
 let i = 0;
 let rndArr = [];
-while ( i < 10 ) {
+while ( i < 20 ) {
     rndArr.push(getRandomInt(50));
     i++;
     fs.writeFileSync('signal.json', JSON.stringify(rndArr));
@@ -27,16 +27,10 @@ while ( i < 10 ) {
 
 let j = 0;
 let rndJArr = [];
-while ( j < 10 ) {
+while ( j < 20 ) {
     rndJArr.push(getRandomInt(50));
     j++;
 }
-console.log(rndArr);
-console.log(rndJArr);
-/*while ( i < 10 ) {
-    fs.writeFileSync('signal.json', JSON.stringify(getRandomInt(50)));
-    i++;
-}*/
 i = 0;
 
 app.get('/', (req, res) => {
@@ -52,10 +46,8 @@ app.ws('/', (ws, req) => {
         });
     });
     db.close();
-
-    //ws.send(JSON.stringify(rndArr));
-    //ws.send(JSON.stringify({'arrays': [rndArr, rndJArr], 'data':}));
-    //ws.send(JSON.stringify(data))
+    console.log(rndArr);
+    console.log(rndJArr);
 
     ws.on('message', (msg) => {
         console.log(JSON.parse(msg))

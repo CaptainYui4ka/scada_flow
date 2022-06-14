@@ -44,8 +44,6 @@ export const options = {
 const LineChart = () => {
   
   const [ linedate, setLine ] = useState('');
-  //const [ linedate2, setLine2 ] = useState('');
-  //const [ dateline, setDateLine ] = useState('');
 
   socket.onmessage = function(event) {
     var message = event.data;
@@ -54,8 +52,6 @@ const LineChart = () => {
     //console.log(dateline);
     showMessage(event.data);
   }
-  
-  //console.log(dateline)
 
   function showMessage(message) {
     var messageSignal = document.createElement('div');
@@ -65,12 +61,9 @@ const LineChart = () => {
   console.log(linedate);
   let lineone = linedate.arraysone;
   let linetwo = linedate.arraystwo;
-  //console.log(lineone);
-  //console.log(linetwo);
-  
 
   //Линейный график
-  const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
   const data = {
     labels ,
     datasets: [
